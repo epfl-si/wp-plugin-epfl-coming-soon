@@ -50,12 +50,30 @@ function epfl_coming_soon_register_settings()
     add_settings_field('epfl_coming_soon_plugin_options_status', 'Status', 'epfl_coming_soon_plugin_setting_status', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
     add_settings_field('epfl_coming_soon_plugin_setting_theme_maintenance', 'Use theme maintenance page', 'epfl_coming_soon_plugin_setting_theme_maintenance', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
     add_settings_field('epfl_coming_soon_plugin_setting_status_code', 'Use 503 status', 'epfl_coming_soon_plugin_setting_status_code', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
+
+    add_settings_section('epfl_coming_soon_plugin_page_content', 'Page content', 'epfl_coming_soon_plugin_page_content_section_text', 'epfl_coming_soon_plugin');
+    add_settings_field('epfl_coming_soon_plugin_page_content', 'HTML page content', 'epfl_coming_soon_plugin_page_content', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_page_content');
+
 }
 add_action('admin_init', 'epfl_coming_soon_register_settings');
 
 function epfl_coming_soon_plugin_section_text()
 {
     echo "<p>In this section you can parametrize the EPFL Coming Soon plugin</p>";
+}
+
+function epfl_coming_soon_plugin_page_content_section_text()
+{
+    echo "<p>In this section you can modify the HTML content of page</p>";
+}
+
+function epfl_coming_soon_plugin_page_content() {
+  echo "<textarea id='epfl_coming_soon_plugin_page_content' name='epfl_coming_soon_plugin_options[page_content]' rows='4' cols='50'>" . get_option('epfl_coming_soon_plugin_options')['page_content'] . "</textarea>";
+}
+
+function get_plugin_version() {
+  $plugin_data = get_plugin_data( __FILE__ );
+  return $plugin_data['Version'];
 }
 
 function _get_coming_soon_status()
@@ -100,7 +118,6 @@ function _epfl_maintenance_load()
         die("MAINTENANCE OR SOMETHING");
     }
 }
-
 
 add_action('admin_bar_menu', 'my_new_toolbar_item', 999);
 
