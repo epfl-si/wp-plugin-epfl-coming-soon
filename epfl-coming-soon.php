@@ -115,3 +115,26 @@ function my_new_toolbar_item($wp_admin_bar)
         $wp_admin_bar->add_node($args);
     }
 }
+
+function is_plugin_activated( $plugin ) {
+  $plugin_list = get_option( 'active_plugins' );
+  return in_array( $plugin , $plugin_list );
+}
+
+function comming_soon_api() {
+  if (is_plugin_activated('epfl-coming-soon/epfl-coming-soon.php')) {
+    $data = array();
+    $data["status"] = get_option('epfl_coming_soon_plugin_options')['status'];
+    $data["status_code"] = get_option('epfl_coming_soon_plugin_options')['status_code'];
+    $data["theme_maintenance"] = get_option('epfl_coming_soon_plugin_options')['theme_maintenance'];
+    $data["version"] = get_plugin_version();
+    return new WP_REST_Response( $data, 200 );
+  }
+}
+
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'comingsoon/v1/', '/status', array(
+    'methods' => WP_REST_Server::READABLE,
+    'callback' => 'comming_soon_api',
+  ) );
+} );
