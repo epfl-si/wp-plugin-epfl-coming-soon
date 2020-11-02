@@ -22,6 +22,8 @@ TODOs:
 defined('ABSPATH')
     or die('Direct access not allowed.');
 
+define("EPFL_COMING_SOON_VERSION", "0.0.2");
+
 function epfl_coming_soon_add_settings_page()
 {
     add_options_page('EPFL Coming Soon', 'EPFL Coming Soon', 'manage_options', 'epfl-coming-soon', 'epfl_coming_soon_render_plugin_settings_page');
@@ -35,7 +37,7 @@ function epfl_coming_soon_render_plugin_settings_page()
     <form action="options.php" method="post">
         <?php
         settings_fields('epfl_coming_soon_plugin_options');
-        do_settings_sections('epfl_coming_soon_plugin'); ?>
+    do_settings_sections('epfl_coming_soon_plugin'); ?>
         <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('Save'); ?>" />
     </form>
     <?php
@@ -91,8 +93,8 @@ function epfl_coming_soon_plugin_page_title()
 
 function get_plugin_version()
 {
-    $plugin_data = get_plugin_data(__FILE__);
-    return $plugin_data['Version'];
+    return EPFL_COMING_SOON_VERSION;
+    // Note: get_plugin_data(__FILE__) works only when authenticated
 }
 
 function _get_coming_soon_status()
@@ -120,16 +122,43 @@ function epfl_coming_soon_plugin_setting_theme_maintenance()
 function epfl_coming_soon_plugin_setting_status_code()
 {
     $epfl_coming_soon_options = get_option('epfl_csp_options');
-    $epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? 'no';
+    $epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? 'yes';
     echo "<input id='epfl_coming_soon_plugin_setting_status_code_503_yes' name='epfl_csp_options[status_code]' type='radio' value='yes' ". ($epfl_coming_soon_status_code === "yes" ? "checked='checked'" : "") ." /> <label for='epfl_coming_soon_plugin_setting_status_code_503_yes'>Yes, use 503 HTTP status code</label><br>";
     echo "<input id='epfl_coming_soon_plugin_setting_status_code_503_no' name='epfl_csp_options[status_code]' type='radio' value='no' ". ($epfl_coming_soon_status_code === "no" ? "checked='checked'" : "") ." /> <label for='epfl_coming_soon_plugin_setting_status_code_503_no'>No, just display the page with a 200 HTTP status code</label>";
 }
 
+// Found via https://wordpress.stackexchange.com/questions/221202/does-something-like-is-rest-exist
+// → https://wordpress.stackexchange.com/a/356946/130347
+function is_rest_api_request()
+{
+    if (empty($_SERVER['REQUEST_URI'])) {
+        // Probably a CLI request
+        return false;
+    }
+
+    $rest_prefix         = trailingslashit(rest_get_url_prefix());
+    $is_rest_api_request = (false !== strpos($_SERVER['REQUEST_URI'], $rest_prefix));
+
+    return apply_filters('is_rest_api_request', $is_rest_api_request);
+}
+
+function _test_maintenance_file()
+{
+    $maintenance_file = WP_CONTENT_DIR . '/../.maintenance';
+    return file_exists($maintenance_file);
+}
 
 add_action('plugins_loaded', '_epfl_maintenance_load');
 function _epfl_maintenance_load()
 {
-    if (! is_user_logged_in() && ! is_admin() && _get_coming_soon_status() === 'on') {
+    //var_dump(is_rest_api_request());
+    if (php_sapi_name() !== 'cli'               // not on cli (e.g. wp-cli)
+        && ! is_user_logged_in()                // not when the user is authenticaed
+        && ! is_admin()                         // not on back office
+        && ! is_rest_api_request()              // not on rest API routes
+        && ( _get_coming_soon_status() === 'on' // only if the plugin is armed
+             || _test_maintenance_file())       // or if the .maintenance file is present
+    ) {
         if (get_option('epfl_coming_soon_plugin_options')['status_code'] === 'yes') {
             header('HTTP/1.1 503 Service Temporarily Unavailable');
             header('Status: 503 Service Temporarily Unavailable');
@@ -174,7 +203,7 @@ function comming_soon_api()
 {
     if (is_plugin_activated('epfl-coming-soon/epfl-coming-soon.php')) {
         $data = array();
-        $data["status"] = get_option('epfl_csp_options')['status'];
+        $data["status"] = _test_maintenance_file() ? 'on' : get_option('epfl_csp_options')['status'];
         $data["status_code"] = get_option('epfl_csp_options')['status_code'];
         $data["theme_maintenance"] = get_option('epfl_csp_options')['theme_maintenance'];
         $data["version"] = get_plugin_version();
@@ -183,7 +212,7 @@ function comming_soon_api()
 }
 
 add_action('rest_api_init', function () {
-    register_rest_route('comingsoon/v1/', '/status', array(
+    register_rest_route('epfl-coming-soon/v1/', '/status', array(
     'methods' => WP_REST_Server::READABLE,
     'callback' => 'comming_soon_api',
   ));
