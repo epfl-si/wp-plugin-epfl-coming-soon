@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: EPFL Coming Soon
-Plugin URI: http://wordpress.org/plugins/tunes-fmb
-Description: This is not just a cool plugin
+Plugin URI: https://github.com/epfl-si/wp-plugin-epfl-coming-soon
+Description: EPFL coming soon / maintenance plugin
 Author: EPFL SI
 Version: 0.0.1
 Author URI: https://github.com/epfl-si
@@ -35,7 +35,7 @@ function epfl_coming_soon_render_plugin_settings_page()
     <form action="options.php" method="post">
         <?php
         settings_fields('epfl_coming_soon_plugin_options');
-    do_settings_sections('epfl_coming_soon_plugin'); ?>
+        do_settings_sections('epfl_coming_soon_plugin'); ?>
         <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('Save'); ?>" />
     </form>
     <?php
@@ -45,11 +45,11 @@ function epfl_coming_soon_render_plugin_settings_page()
 function epfl_coming_soon_register_settings()
 {
     register_setting('epfl_coming_soon_plugin_options', 'epfl_coming_soon_plugin_options', 'epfl_coming_soon_plugin_options_validate');
+    
     add_settings_section('epfl_coming_soon_plugin_settings', 'Settings', 'epfl_coming_soon_plugin_section_text', 'epfl_coming_soon_plugin');
-
     add_settings_field('epfl_coming_soon_plugin_options_status', 'Status', 'epfl_coming_soon_plugin_setting_status', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
     add_settings_field('epfl_coming_soon_plugin_setting_theme_maintenance', 'Use theme maintenance page', 'epfl_coming_soon_plugin_setting_theme_maintenance', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
-    //add_settings_field( 'epfl_coming_soon_plugin_setting_start_date', 'Start Date', 'epfl_coming_soon_plugin_setting_start_date', 'epfl_coming_soon_example_plugin', 'api_settings' );
+    add_settings_field('epfl_coming_soon_plugin_setting_status_code', 'Use 503 status', 'epfl_coming_soon_plugin_setting_status_code', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
 }
 add_action('admin_init', 'epfl_coming_soon_register_settings');
 
@@ -66,20 +66,33 @@ function _get_coming_soon_status()
 
 function epfl_coming_soon_plugin_setting_status()
 {
-    echo "<input id='epfl_coming_soon_plugin_setting_status2' name='epfl_coming_soon_plugin_options[status]' type='radio' value='on' ". ((_get_coming_soon_status() === "on") ? "checked='checked'" : "") ." /> ON<br>";
-    echo "<input id='epfl_coming_soon_plugin_setting_status2' name='epfl_coming_soon_plugin_options[status]' type='radio' value='off' ". ((_get_coming_soon_status() === "off") ? "checked='checked'" : "") ." /> OFF";
+    $epfl_coming_soon_options = get_option('epfl_coming_soon_plugin_options');
+    $epfl_coming_soon_status = $epfl_coming_soon_options['status'] ?? 'off';
+    echo "<input id='epfl_coming_soon_plugin_setting_status' name='epfl_coming_soon_plugin_options[status]' type='radio' value='on' ". ($epfl_coming_soon_status === "on" ? "checked='checked'" : "") ." /> ON<br>";
+    echo "<input id='epfl_coming_soon_plugin_setting_status' name='epfl_coming_soon_plugin_options[status]' type='radio' value='off' ". ($epfl_coming_soon_status === "off" ? "checked='checked'" : "") ." /> OFF";
 }
 
 function epfl_coming_soon_plugin_setting_theme_maintenance()
 {
-    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_yes' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='yes' ". ((get_option('epfl_coming_soon_plugin_options')['theme_maintenance'] === "yes") ? "checked='checked'" : "") ." /> Yes, if present <br>";
-    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_no' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='no' ". ((get_option('epfl_coming_soon_plugin_options')['theme_maintenance'] === "no") ? "checked='checked'" : "") ." /> No, use XXX ";
+    $epfl_coming_soon_options = get_option('epfl_coming_soon_plugin_options');
+    $epfl_coming_soon_theme_maintenance = $epfl_coming_soon_options['theme_maintenance'] ?? 'no';
+    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_yes' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='yes' ". ($epfl_coming_soon_theme_maintenance === "yes" ? "checked='checked'" : "") ." /> Yes, if present <br>";
+    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_no' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='no' ". ($epfl_coming_soon_theme_maintenance === "no" ? "checked='checked'" : "") ." /> No, use XXX ";
+}
+
+function epfl_coming_soon_plugin_setting_status_code()
+{
+    $epfl_coming_soon_options = get_option('epfl_coming_soon_plugin_options');
+    $epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? 'no';
+    echo "<input id='epfl_coming_soon_plugin_setting_status_code_503_yes' name='epfl_coming_soon_plugin_options[status_code]' type='radio' value='yes' ". ($epfl_coming_soon_status_code === "yes" ? "checked='checked'" : "") ." /> Yes, use 503 HTTP status code<br>";
+    echo "<input id='epfl_coming_soon_plugin_setting_status_code_503_no' name='epfl_coming_soon_plugin_options[status_code]' type='radio' value='no' ". ($epfl_coming_soon_status_code === "no" ? "checked='checked'" : "") ." /> No, just display the page with a 200 HTTP status code ";
 }
 
 
 add_action('plugins_loaded', '_epfl_maintenance_load');
 function _epfl_maintenance_load()
 {
+    // TODO check $epfl_coming_soon_status_code
     if (! is_user_logged_in() && ! is_admin() && _get_coming_soon_status() === 'on') {
         header('HTTP/1.1 503 Service Temporarily Unavailable');
         header('Status: 503 Service Temporarily Unavailable');
