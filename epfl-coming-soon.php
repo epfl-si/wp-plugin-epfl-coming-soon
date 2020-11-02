@@ -4,7 +4,7 @@ Plugin Name: EPFL Coming Soon
 Plugin URI: https://github.com/epfl-si/wp-plugin-epfl-coming-soon
 Description: EPFL coming soon / maintenance plugin
 Author: EPFL SI
-Version: 0.0.1
+Version: 0.0.2
 Author URI: https://github.com/epfl-si
 */
 
@@ -76,8 +76,8 @@ function epfl_coming_soon_plugin_setting_theme_maintenance()
 {
     $epfl_coming_soon_options = get_option('epfl_coming_soon_plugin_options');
     $epfl_coming_soon_theme_maintenance = $epfl_coming_soon_options['theme_maintenance'] ?? 'no';
-    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_yes' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='yes' ". ($epfl_coming_soon_theme_maintenance === "yes" ? "checked='checked'" : "") ." /> Yes, if present <br>";
-    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_no' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='no' ". ($epfl_coming_soon_theme_maintenance === "no" ? "checked='checked'" : "") ." /> No, use XXX ";
+    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_yes' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='yes' ". ($epfl_coming_soon_theme_maintenance === "yes" ? "checked='checked'" : "") ." /> Yes, if present (maintenance.php)<br>";
+    echo "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_no' name='epfl_coming_soon_plugin_options[theme_maintenance]' type='radio' value='no' ". ($epfl_coming_soon_theme_maintenance === "no" ? "checked='checked'" : "") ." /> No, use the HTML code provided below";
 }
 
 function epfl_coming_soon_plugin_setting_status_code()
