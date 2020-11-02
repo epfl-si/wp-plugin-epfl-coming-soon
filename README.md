@@ -4,7 +4,7 @@ A WordPress plugin that allows to display a coming soon / maintenance page.
 
 ## Features
   * Simple **ON / OFF** mode
-  * Edit coming soon page in the wordpress **WYSIWYG editor (TinyMCE)
+  * Edit coming soon page in the wordpress **WYSIWYG** editor (TinyMCE)
   * Edit the page's title
   * Option to **redirect on the theme** `maintenance.php` page if present (has to be self-contained for now)
   * Option to send a **[HTTP status code 503](https://httpstatuses.com/503)** along with the page
@@ -13,5 +13,11 @@ A WordPress plugin that allows to display a coming soon / maintenance page.
 
 ## Screenshot
 
-![EPFL coming soon screenshot](./screenshot_admin.png)
+### Backend
+![EPFL coming soon screenshot - backend](./screenshot_admin.png)
 
+### Frontend
+![EPFL coming soon screenshot - frontend](./screenshot_frontend.png)
+
+## Issues
+Feel free to share your thoughts, issues, remarks and comments here: <https://github.com/epfl-si/wp-plugin-epfl-coming-soon/issues/new/choose>.
