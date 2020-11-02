@@ -4,7 +4,7 @@ Plugin Name: EPFL Coming Soon
 Plugin URI: https://github.com/epfl-si/wp-plugin-epfl-coming-soon
 Description: EPFL coming soon / maintenance plugin
 Author: EPFL SI
-Version: 0.0.2
+Version: 0.0.3
 Author URI: https://github.com/epfl-si
 */
 
@@ -22,7 +22,7 @@ TODOs:
 defined('ABSPATH')
     or die('Direct access not allowed.');
 
-define("EPFL_COMING_SOON_VERSION", "0.0.2");
+define("EPFL_COMING_SOON_VERSION", "0.0.3");
 
 function epfl_coming_soon_add_settings_page()
 {
@@ -148,10 +148,15 @@ function _test_maintenance_file()
     return file_exists($maintenance_file);
 }
 
+function _test_theme_maintenance_file()
+{
+    $maintenance_file = get_template_directory() . '/maintenance.php';
+    return file_exists($maintenance_file);
+}
+
 add_action('plugins_loaded', '_epfl_maintenance_load');
 function _epfl_maintenance_load()
 {
-    //var_dump(is_rest_api_request());
     if (php_sapi_name() !== 'cli'               // not on cli (e.g. wp-cli)
         && ! is_user_logged_in()                // not when the user is authenticaed
         && ! is_admin()                         // not on back office
@@ -159,28 +164,44 @@ function _epfl_maintenance_load()
         && ( _get_coming_soon_status() === 'on' // only if the plugin is armed
              || _test_maintenance_file())       // or if the .maintenance file is present
     ) {
+
+        // By default, send HTTP 503 status code along with the content
         if (get_option('epfl_coming_soon_plugin_options')['status_code'] === 'yes') {
-            header('HTTP/1.1 503 Service Temporarily Unavailable');
-            header('Status: 503 Service Temporarily Unavailable');
+            status_header(503);
             header('Retry-After: 43200'); // retry in a ½ day
         }
 
-        if (false /*check theme maintenance page*/) {
-            // TODO
+        // In case the user wants to use his theme's maintenance page — need improvements
+        if (_test_theme_maintenance_file() && get_option('epfl_csp_options')['theme_maintenance'] === 'yes') {
+            // NOTE: I've looked around to find a way to render the current theme
+            //       but can't find a way to do it. The ideal solution shall be to
+            //       load the maintenance page as the 404.php page, e.g. with the 
+            //       theme's header and footer. (see `load_template`)
+            //       Another way to achieve that could be to ask the user to set the 
+            //       page ID he wants to display as coming soon / maintenance page
+            //       and then use:
+            //         $the_page_link = get_permalink( $the_page_id );
+            //         wp_redirect( $the_page_link );
+            //       But right now, maintenance.php have to be self contained..!
+            include_once(get_template_directory() . '/maintenance.php');
+            exit();
+
+        // Whenever the user create the page in the plugin's TinyMCE editor
         } elseif (trim(get_option('epfl_csp_options')['page_content']) !== '') {
             $epfl_coming_soon_template = file_get_contents(__DIR__ . '/page-template.html');
             $epfl_coming_soon_template = str_replace("{{ TITLE }}", get_bloginfo('name') . ' &raquo; ' . get_option('epfl_csp_options')['page_title'], $epfl_coming_soon_template);
             $epfl_coming_soon_template = str_replace("{{ CONTENT }}", get_option('epfl_csp_options')['page_content'], $epfl_coming_soon_template);
             echo $epfl_coming_soon_template;
-            die(/* do nothing more */);
+            exit();
+
+        // In every other cases, just display a plain text sorry message
         } else {
-            die("Sorry, site's not ready yes.");
+            die("Sorry, site's not ready yet.");
         }
     }
 }
 
 add_action('admin_bar_menu', 'epfl_coming_soon_admin_bar_entry', 999);
-
 function epfl_coming_soon_admin_bar_entry($wp_admin_bar)
 {
     $args = array(
