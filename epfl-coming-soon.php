@@ -35,6 +35,7 @@ function epfl_coming_soon_render_plugin_settings_page()
     <form action="options.php" method="post">
         <?php
         settings_fields('epfl_coming_soon_plugin_options');
+        settings_fields('epfl_coming_soon_plugin_page_source');
         do_settings_sections('epfl_coming_soon_plugin'); ?>
         <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('Save'); ?>" />
     </form>
@@ -45,12 +46,13 @@ function epfl_coming_soon_render_plugin_settings_page()
 function epfl_coming_soon_register_settings()
 {
     register_setting('epfl_coming_soon_plugin_options', 'epfl_coming_soon_plugin_options', 'epfl_coming_soon_plugin_options_validate');
-    
+
     add_settings_section('epfl_coming_soon_plugin_settings', 'Settings', 'epfl_coming_soon_plugin_section_text', 'epfl_coming_soon_plugin');
     add_settings_field('epfl_coming_soon_plugin_options_status', 'Status', 'epfl_coming_soon_plugin_setting_status', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
     add_settings_field('epfl_coming_soon_plugin_setting_theme_maintenance', 'Use theme maintenance page', 'epfl_coming_soon_plugin_setting_theme_maintenance', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
     add_settings_field('epfl_coming_soon_plugin_setting_status_code', 'Use 503 status', 'epfl_coming_soon_plugin_setting_status_code', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
 
+    register_setting('epfl_coming_soon_plugin_page_source', 'epfl_coming_soon_plugin_page_source', 'epfl_coming_soon_plugin_options_validate');
     add_settings_section('epfl_coming_soon_plugin_page_content', 'Page content', 'epfl_coming_soon_plugin_page_content_section_text', 'epfl_coming_soon_plugin');
     add_settings_field('epfl_coming_soon_plugin_page_content', 'HTML page content', 'epfl_coming_soon_plugin_page_content', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_page_content');
 
@@ -67,8 +69,10 @@ function epfl_coming_soon_plugin_page_content_section_text()
     echo "<p>In this section you can modify the HTML content of page</p>";
 }
 
-function epfl_coming_soon_plugin_page_content() {
-  echo "<textarea id='epfl_coming_soon_plugin_page_content' name='epfl_coming_soon_plugin_options[page_content]' rows='4' cols='50'>" . get_option('epfl_coming_soon_plugin_options')['page_content'] . "</textarea>";
+function epfl_coming_soon_plugin_page_content()
+{
+    $epfl_coming_soon_plugin_page_source = get_option('epfl_coming_soon_plugin_page_source') ?? 'Coming soon';
+    wp_editor( $epfl_coming_soon_plugin_page_source,  "epfl_coming_soon_plugin_page_source",  array() );
 }
 
 function get_plugin_version() {
