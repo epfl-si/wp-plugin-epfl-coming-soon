@@ -24,14 +24,14 @@ defined('ABSPATH')
 
 function epfl_coming_soon_add_settings_page()
 {
-    add_options_page('EPFL Coming Soon', 'EPFL Coming Soon Settings', 'manage_options', 'epfl-coming-soon', 'epfl_coming_soon_render_plugin_settings_page');
+    add_options_page('EPFL Coming Soon', 'EPFL Coming Soon', 'manage_options', 'epfl-coming-soon', 'epfl_coming_soon_render_plugin_settings_page');
 }
 add_action('admin_menu', 'epfl_coming_soon_add_settings_page');
 
 function epfl_coming_soon_render_plugin_settings_page()
 {
     ?>
-    <h2>EPFL Coming Soon Settings</h2>
+    <h2>EPFL Coming Soon</h2>
     <form action="options.php" method="post">
         <?php
         settings_fields('epfl_coming_soon_plugin_options');
@@ -51,9 +51,9 @@ function epfl_coming_soon_register_settings()
     add_settings_field('epfl_coming_soon_plugin_setting_theme_maintenance', 'Use theme maintenance page', 'epfl_coming_soon_plugin_setting_theme_maintenance', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
     add_settings_field('epfl_coming_soon_plugin_setting_status_code', 'Use 503 status', 'epfl_coming_soon_plugin_setting_status_code', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings');
 
-    add_settings_section('epfl_coming_soon_plugin_page_settings', 'Page content', 'epfl_coming_soon_plugin_page_content_section_text', 'epfl_coming_soon_plugin');
+    add_settings_section('epfl_coming_soon_plugin_page_settings', 'Displayed page', 'epfl_coming_soon_plugin_page_content_section_text', 'epfl_coming_soon_plugin');
     add_settings_field('epfl_coming_soon_plugin_setting_page_title', 'Page title', 'epfl_coming_soon_plugin_page_title', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_page_settings');
-    add_settings_field('epfl_coming_soon_plugin_setting_page_content', 'HTML page content', 'epfl_coming_soon_plugin_page_content', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_page_settings');
+    add_settings_field('epfl_coming_soon_plugin_setting_page_content', 'Page content', 'epfl_coming_soon_plugin_page_content', 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_page_settings');
 }
 add_action('admin_init', 'epfl_coming_soon_register_settings');
 
@@ -64,19 +64,29 @@ function epfl_coming_soon_plugin_section_text()
 
 function epfl_coming_soon_plugin_page_content_section_text()
 {
-    echo "<p>In this section you can modify the HTML content of page</p>";
+    echo "<p>In this section you can modify the coming soon / maintenance page diplayed</p>";
 }
 
 function epfl_coming_soon_plugin_page_content()
 {
-    $epfl_coming_soon_plugin_page_source = get_option('epfl_csp_options')['page_content'] ?? 'Coming soon';
+    $default_page_content = <<<EOD
+    &nbsp;
+
+    &nbsp;
+    <p style="text-align: center;"><img class="img-fluid aligncenter" src="https://web2018.epfl.ch/5.0.2/icons/epfl-logo.svg" alt="Logo EPFL" width="388" height="113" /></p>
+
+    <h3 style="text-align: center; color: #ff0000; font-family: Helvetica, Arial, sans-serif;">Something new is coming...</h3>
+    <p style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center;"><a href="wp-admin/">Connexion / Login</a></p>
+EOD;
+    $epfl_coming_soon_plugin_page_source = get_option('epfl_csp_options')['page_content'] ?? $default_page_content;
     wp_editor($epfl_coming_soon_plugin_page_source, "epfl_coming_soon_page_source_editor", array('textarea_name' => 'epfl_csp_options[page_content]'));
 }
 
 function epfl_coming_soon_plugin_page_title()
 {
     $epfl_coming_soon_plugin_page_title = get_option('epfl_csp_options')['page_title'] ?? 'Coming soon';
-    echo '<input type="text" value="'. $epfl_coming_soon_plugin_page_title .'" name="epfl_csp_options[page_title]" id="epfl_coming_soon_plugin_page_title" /> <label for="epfl_coming_soon_plugin_page_title">The title of the page (will be prefixed by "' . get_bloginfo('name') . ' &raquo;")</label>' ;
+    echo '<input type="text" value="'. $epfl_coming_soon_plugin_page_title .'" name="epfl_csp_options[page_title]" id="epfl_coming_soon_plugin_page_title" />' ;
+    echo '<p class="description" id="epfl_coming_soon_plugin_page_title-description"> <label for="epfl_coming_soon_plugin_page_title">The title of the page (will be prefixed by site title, i.e. "' . get_bloginfo('name') . ' &raquo;")</label></p>';
 }
 
 function get_plugin_version()
