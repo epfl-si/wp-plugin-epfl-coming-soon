@@ -166,7 +166,7 @@ function _epfl_maintenance_load()
     ) {
 
         // By default, send HTTP 503 status code along with the content
-        if (get_option('epfl_coming_soon_plugin_options')['status_code'] === 'yes') {
+        if (get_option('epfl_csp_options')['status_code'] === 'yes') {
             status_header(503);
             header('Retry-After: 43200'); // retry in a ½ day
         }
