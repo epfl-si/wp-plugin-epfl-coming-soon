@@ -15,7 +15,8 @@ class EPFLComingSoon {
         return in_array($plugin, $plugin_list);
     }
 
-    public function epfl_coming_soon_api_rest() {
+    public function epfl_coming_soon_api_rest()
+    {
         register_rest_route('comingsoon/v1/', '/status', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array($this, 'comming_soon_api'),
@@ -76,22 +77,19 @@ class EPFLComingSoon {
     public function epfl_maintenance_load()
     {   
         
-        if (php_sapi_name() !== 'cli'               // not on cli (e.g. wp-cli)
-            && ! is_user_logged_in()                // not when the user is authenticaed
-            && ! is_admin()                         // not on back office
-            && ! $this->_is_rest_api_request()              // not on rest API routes
+        if (php_sapi_name() !== 'cli'                      // not on cli (e.g. wp-cli)
+            && ! is_user_logged_in()                       // not when the user is authenticaed
+            && ! is_admin()                                // not on back office
+            && ! $this->_is_rest_api_request()             // not on rest API routes
             && ( $this->_get_coming_soon_status() === 'on' // only if the plugin is armed
-                || $this->_test_maintenance_file())       // or if the .maintenance file is present
+                 || $this->_test_maintenance_file())       // or if the .maintenance file is present
         ) {
-            
-            
+
             // By default, send HTTP 503 status code along with the content
             if (get_option('epfl_csp_options')['status_code'] === 'yes') {
                 status_header(503);
                 header('Retry-After: 43200'); // retry in a ½ day
             }
-
-            
 
             // In case the user wants to use his theme's maintenance page — need improvements
             if ($this->_test_theme_maintenance_file() && get_option('epfl_csp_options')['theme_maintenance'] === 'yes') {
@@ -180,7 +178,7 @@ class EPFLComingSoon {
 
         <h3 style="text-align: center; color: #ff0000; font-family: Helvetica, Arial, sans-serif;">Something new is coming...</h3>
         <p style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center;"><a href="wp-admin/">Connexion / Login</a></p>
-    EOD;
+EOD;
         $epfl_coming_soon_plugin_page_source = get_option('epfl_csp_options')['page_content'] ?? $default_page_content;
         wp_editor($epfl_coming_soon_plugin_page_source, "epfl_coming_soon_page_source_editor", array('textarea_name' => 'epfl_csp_options[page_content]'));
     }
