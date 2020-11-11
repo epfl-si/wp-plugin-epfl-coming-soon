@@ -1,12 +1,12 @@
-# Copyright (C) 2020 EPFL SI
+# Copyright (C) 2020 EPFL IDEV-FSD
 # This file is distributed under the same license as the EPFL Coming Soon plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPForms EPFL Payonline 0.0.7\n"
+"Project-Id-Version: WPForms EPFL Payonline 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/wp-cli/i18n-command/issues\n"
-"POT-Creation-Date: 2020-11-11T20:35:22+01:00\n"
+"POT-Creation-Date: 2020-11-11T20:57:23+01:00\n"
 "PO-Revision-Date: 2020-11-11 18:23+0100\n"
-"Last-Translator: nborboen <ponsfrilus@gmail.com>\n"
+"Last-Translator: Nicolas Borboën <ponsfrilus@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -25,12 +25,16 @@ msgid "https://github.com/epfl-si/wp-plugin-epfl-coming-soon"
 msgstr "https://github.com/epfl-si/wp-plugin-epfl-coming-soon"
 
 #. Description of the plugin
-msgid "EPFL coming soon / maintenance plugin"
-msgstr "EPFL coming soon / maintenance plugin"
+msgid ""
+"Coming Soon, Under Construction or Maintenance Mode plugin for WordPress "
+"done right."
+msgstr ""
+"Coming Soon, Under Construction or Maintenance Mode plugin for WordPress "
+"done right."
 
 #. Author of the plugin
-msgid "EPFL SI"
-msgstr "EPFL SI"
+msgid "EPFL IDEV-FSD"
+msgstr "EPFL IDEV-FSD"
 
 #. Author URI of the plugin
 msgid "https://github.com/epfl-si"
@@ -139,3 +143,6 @@ msgstr "Non, afficher la page avec un code HTTP 200 (si page \"coming soon\")"
 #: src/classes/class-epflcomingsoon.php:328
 msgid "EPFL Coming Soon is active"
 msgstr "EPFL Coming Soon est activé"
+
+#~ msgid "EPFL coming soon / maintenance plugin"
+#~ msgstr "EPFL coming soon / maintenance plugin"

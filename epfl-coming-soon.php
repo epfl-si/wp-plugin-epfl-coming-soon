@@ -8,8 +8,8 @@
 /*
  * Plugin Name: EPFL Coming Soon
  * Plugin URI: https://github.com/epfl-si/wp-plugin-epfl-coming-soon
- * Description: EPFL coming soon / maintenance plugin
- * Author: EPFL SI
+ * Description: Coming Soon, Under Construction or Maintenance Mode plugin for WordPress done right.
+ * Author: EPFL IDEV-FSD
  * Version: 0.1.0
  * Author URI: https://github.com/epfl-si
  * Text Domain: epfl-coming-soon
