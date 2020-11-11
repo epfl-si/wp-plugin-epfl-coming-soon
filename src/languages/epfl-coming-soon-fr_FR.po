@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPForms EPFL Payonline 0.0.7\n"
 "Report-Msgid-Bugs-To: https://github.com/wp-cli/i18n-command/issues\n"
-"POT-Creation-Date: 2020-11-11T20:18:21+01:00\n"
+"POT-Creation-Date: 2020-11-11T20:35:22+01:00\n"
 "PO-Revision-Date: 2020-11-11 18:23+0100\n"
 "Last-Translator: nborboen <ponsfrilus@gmail.com>\n"
 "Language-Team: French\n"
@@ -128,13 +128,14 @@ msgid "No, use the HTML code provided below"
 msgstr "Non, utiliser le code HTML ci-dessous"
 
 #: src/classes/class-epflcomingsoon.php:316
-msgid "Yes, use 503 HTTP status code"
-msgstr "Oui, utiliser le code HTTP 503"
+msgid "Yes, use 503 HTTP status code (best for maintenance)"
+msgstr "Oui, utiliser le code HTTP 503 (si page de maintenance)"
 
 #: src/classes/class-epflcomingsoon.php:317
-msgid "No, just display the page with a 200 HTTP status code"
-msgstr "Non, afficher la page avec un code HTTP 200"
+msgid ""
+"No, just display the page with a 200 HTTP status code (best for coming soon)"
+msgstr "Non, afficher la page avec un code HTTP 200 (si page \"coming soon\")"
 
 #: src/classes/class-epflcomingsoon.php:328
-msgid "EPFL Coming soon is active"
+msgid "EPFL Coming Soon is active"
 msgstr "EPFL Coming Soon est activé"

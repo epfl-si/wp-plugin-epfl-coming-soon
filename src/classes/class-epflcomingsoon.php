@@ -312,9 +312,9 @@ EOD;
 	 */
 	public function epfl_coming_soon_plugin_setting_status_code() {
 		$epfl_coming_soon_options     = get_option( 'epfl_csp_options' );
-		$epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? 'yes';
-		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_yes' name='epfl_csp_options[status_code]' type='radio' value='yes' " . ( 'yes' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_yes'>%s</label><br>", __( 'Yes, use 503 HTTP status code', 'epfl-coming-soon' ) );
-		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_no' name='epfl_csp_options[status_code]' type='radio' value='no' " . ( 'no' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_no'>%s</label>", __( 'No, just display the page with a 200 HTTP status code', 'epfl-coming-soon' ) );
+		$epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? 'no';
+		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_yes' name='epfl_csp_options[status_code]' type='radio' value='yes' " . ( 'yes' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_yes'>%s</label><br>", __( 'Yes, use 503 HTTP status code (best for maintenance)', 'epfl-coming-soon' ) );
+		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_no' name='epfl_csp_options[status_code]' type='radio' value='no' " . ( 'no' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_no'>%s</label>", __( 'No, just display the page with a 200 HTTP status code (best for coming soon)', 'epfl-coming-soon' ) );
 	}
 
 	/**
@@ -325,7 +325,7 @@ EOD;
 	public function epfl_coming_soon_admin_bar_entry( $wp_admin_bar ) {
 		$args = array(
 			'id'    => 'epfl-coming-soon-status',
-			'title' => __( 'EPFL Coming soon is active', 'epfl-coming-soon' ),
+			'title' => __( 'EPFL Coming Soon is active', 'epfl-coming-soon' ),
 			'href'  => admin_url() . 'options-general.php?page=epfl-coming-soon',
 		);
 		if ( $this->get_coming_soon_status() === 'on' ) {
