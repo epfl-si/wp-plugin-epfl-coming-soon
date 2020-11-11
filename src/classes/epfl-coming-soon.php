@@ -86,9 +86,9 @@ class EPFLComingSoon {
         }
 
         $tmplParams = [
-            // // Define the HTML <base> element in the template
-            // // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-            '{{ BASE_URL }}' => home_url(''),
+            // Define the HTML <base> element in the template
+            // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+            '{{ BASE_URL }}' => home_url('/'),
             '{{ GENERATOR }}' => 'epfl-coming-soon v' . $this->get_plugin_version(),
             '{{ TITLE }}' => get_bloginfo('name') . ' &raquo; ' . get_option('epfl_csp_options')['page_title'],
             '{{ DESCRIPTION }}' => get_bloginfo('description'),
