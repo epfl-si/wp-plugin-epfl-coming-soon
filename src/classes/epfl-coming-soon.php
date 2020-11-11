@@ -75,8 +75,12 @@ class EPFLComingSoon {
     }
 
     public function epfl_maintenance_load()
-    {   
-        
+    {
+        // Leave wp-admin / wp-login apart from epfl-coming-soon plugin
+        if (preg_match("/login|admin|dashboard|account/i", $_SERVER['REQUEST_URI']) > 0) {
+            return;
+        }
+
         if (php_sapi_name() !== 'cli'                      // not on cli (e.g. wp-cli)
             && ! is_user_logged_in()                       // not when the user is authenticaed
             && ! is_admin()                                // not on back office
