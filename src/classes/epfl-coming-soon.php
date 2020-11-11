@@ -113,13 +113,21 @@ class EPFLComingSoon {
             // Whenever the user create the page in the plugin's TinyMCE editor
             } elseif (trim(get_option('epfl_csp_options')['page_content']) !== '') {
                 $template_path = __DIR__ . '/../templates/page-template.html';
-                
                 $epfl_coming_soon_template = file_get_contents($template_path);
-                //die($epfl_coming_soon_template);
+
+                // Define the HTML <base> element in the template
+                // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+                $epfl_coming_soon_template = str_replace("{{ BASE_URL }}", home_url(''), $epfl_coming_soon_template);
+
+                // Define the page title in the template
                 $epfl_coming_soon_template = str_replace("{{ TITLE }}", get_bloginfo('name') . ' &raquo; ' . get_option('epfl_csp_options')['page_title'], $epfl_coming_soon_template);
 
+                // Define the CONTENT in the template
                 $epfl_coming_soon_template = str_replace("{{ CONTENT }}", get_option('epfl_csp_options')['page_content'], $epfl_coming_soon_template);
+
+                // Display the template
                 echo $epfl_coming_soon_template;
+
                 exit();
 
             // In every other cases, just display a plain text sorry message
