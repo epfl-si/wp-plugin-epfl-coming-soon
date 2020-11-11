@@ -79,8 +79,8 @@ class EPFLComingSoon {
         // Get the stylesheets of the EPFL theme (TODO: find a smarter and automated way...)
         if (strtolower(wp_get_theme()->name) === 'epfl') {
             $style = '<link rel="stylesheet" href="' . get_stylesheet_uri() . '">'."\n";
-            $style .= '    <link rel="stylesheet" href="http://wp-httpd/wp-content/themes/wp-theme-2018.git/wp-theme-2018/assets/css/base.css">'."\n";
-            $style .= '    <link rel="stylesheet" href="http://wp-httpd/wp-content/themes/wp-theme-2018.git/wp-theme-2018/assets/css/vendor.min.css">'."\n";
+            $style .= '    <link rel="stylesheet" href="' . get_stylesheet_directory_uri() . '/assets/css/base.css' . '">'."\n";
+            $style .= '    <link rel="stylesheet" href="' . get_stylesheet_directory_uri() . '/assets/css/vendor.min.css' . '">'."\n";
         } else {
             $style = '    <link rel="stylesheet" href="'.get_stylesheet_uri().'">';
         }
