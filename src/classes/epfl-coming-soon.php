@@ -248,7 +248,7 @@ EOD;
             'title' => 'EPFL Coming soon is active',
             'href'  => admin_url() . 'options-general.php?page=epfl-coming-soon',
         );
-        if ($this->_get_coming_soon_status() === 'on' && ! is_admin()) {
+        if ($this->_get_coming_soon_status() === 'on') {
             $wp_admin_bar->add_node($args);
         }
     }
