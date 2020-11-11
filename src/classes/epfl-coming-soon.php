@@ -74,6 +74,31 @@ class EPFLComingSoon {
         return $options['status'];
     }
 
+    private function _do_template_replacement($template)
+    {
+        // Get the stylesheets of the EPFL theme (TODO: find a smarter and automated way...)
+        if (strtolower(wp_get_theme()->name) === 'epfl') {
+            $style = '<link rel="stylesheet" href="' . get_stylesheet_uri() . '">'."\n";
+            $style .= '    <link rel="stylesheet" href="http://wp-httpd/wp-content/themes/wp-theme-2018.git/wp-theme-2018/assets/css/base.css">'."\n";
+            $style .= '    <link rel="stylesheet" href="http://wp-httpd/wp-content/themes/wp-theme-2018.git/wp-theme-2018/assets/css/vendor.min.css">'."\n";
+        } else {
+            $style = '    <link rel="stylesheet" href="'.get_stylesheet_uri().'">';
+        }
+
+        $tmplParams = [
+            // // Define the HTML <base> element in the template
+            // // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+            '{{ BASE_URL }}' => home_url(''),
+            '{{ GENERATOR }}' => 'epfl-coming-soon v' . $this->get_plugin_version(),
+            '{{ TITLE }}' => get_bloginfo('name') . ' &raquo; ' . get_option('epfl_csp_options')['page_title'],
+            '{{ DESCRIPTION }}' => get_bloginfo('description'),
+            '{{ STYLE }}' => $style,
+            '{{ CONTENT }}' => get_option('epfl_csp_options')['page_content'],
+        ];
+
+        return strtr($template, $tmplParams);
+    }
+
     public function epfl_maintenance_load()
     {
         // Leave wp-admin / wp-login apart from epfl-coming-soon plugin
@@ -115,18 +140,8 @@ class EPFLComingSoon {
                 $template_path = __DIR__ . '/../templates/page-template.html';
                 $epfl_coming_soon_template = file_get_contents($template_path);
 
-                // Define the HTML <base> element in the template
-                // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-                $epfl_coming_soon_template = str_replace("{{ BASE_URL }}", home_url(''), $epfl_coming_soon_template);
-
-                // Define the page title in the template
-                $epfl_coming_soon_template = str_replace("{{ TITLE }}", get_bloginfo('name') . ' &raquo; ' . get_option('epfl_csp_options')['page_title'], $epfl_coming_soon_template);
-
-                // Define the CONTENT in the template
-                $epfl_coming_soon_template = str_replace("{{ CONTENT }}", get_option('epfl_csp_options')['page_content'], $epfl_coming_soon_template);
-
                 // Display the template
-                echo $epfl_coming_soon_template;
+                echo $this->_do_template_replacement($epfl_coming_soon_template);
 
                 exit();
 
