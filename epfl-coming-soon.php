@@ -19,7 +19,7 @@ defined( 'ABSPATH' )
 
 define( 'EPFL_COMING_SOON_VERSION', '0.0.7' );
 
-require_once WP_CONTENT_DIR . '/plugins/epfl-coming-soon/src/classes/epfl-coming-soon.php';
+require_once WP_CONTENT_DIR . '/plugins/epfl-coming-soon/src/classes/class-epflcomingsoon.php';
 
 /**
  * Init EPFL Coming Soon plugin

@@ -17,12 +17,12 @@ install_phpcs:
 
 .PHONY: phpcs
 ## Run linter phpcs WordPress
-phpcs:
+phpcs: install_phpcs
 	@echo '**** run phpcs ****'
 	./vendor/bin/phpcs --standard=WordPress-Core epfl-coming-soon.php src/**/*.php
 
 .PHONY: phpcbf
 ## Run linter phpcbf WordPress
-phpcbf:
+phpcbf: install_phpcs phpcs
 	@echo '**** phpcbf ****'
 	./vendor/bin/phpcbf --standard=WordPress-Core epfl-coming-soon.php src/**/*.php
