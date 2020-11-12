@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the EPFL Coming Soon plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: EPFL Coming Soon 0.1.0\n"
+"Project-Id-Version: EPFL Coming Soon 0.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/wp-cli/i18n-command/issues\n"
 "Last-Translator: Nicolas Borboën <ponsfrilus@gmail.com>\n"
 "Language-Team: EPFL IDEV-FSD <https://github.com/epfl-si/wp-plugin-epfl-coming-soon>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-11T21:00:03+01:00\n"
+"POT-Creation-Date: 2020-11-12T18:52:27+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: epfl-coming-soon\n"
@@ -103,14 +103,14 @@ msgstr ""
 msgid "No, use the HTML code provided below"
 msgstr ""
 
-#: src/classes/class-epflcomingsoon.php:316
+#: src/classes/class-epflcomingsoon.php:322
 msgid "Yes, use 503 HTTP status code (best for maintenance)"
 msgstr ""
 
-#: src/classes/class-epflcomingsoon.php:317
+#: src/classes/class-epflcomingsoon.php:323
 msgid "No, just display the page with a 200 HTTP status code (best for coming soon)"
 msgstr ""
 
-#: src/classes/class-epflcomingsoon.php:328
+#: src/classes/class-epflcomingsoon.php:334
 msgid "EPFL Coming Soon is active"
 msgstr ""
