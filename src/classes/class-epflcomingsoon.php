@@ -120,7 +120,6 @@ class EPFLComingSoon {
 		if ( strtolower( wp_get_theme()->name ) === 'epfl' ) {
 			$style  = "<link rel='stylesheet' href='" . get_stylesheet_uri() . "'>\n";
 			$style .= "    <link rel='stylesheet' href='" . get_stylesheet_directory_uri() . '/assets/css/base.css' . "'>\n";
-			$style .= "    <link rel='stylesheet' href='" . get_stylesheet_directory_uri() . '/assets/css/vendor.min.css' . "'>\n";
 		} else {
 			$style = '    <link rel="stylesheet" href="' . get_stylesheet_uri() . '">';
 		}
