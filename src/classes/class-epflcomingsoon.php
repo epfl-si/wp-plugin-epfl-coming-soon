@@ -215,10 +215,13 @@ class EPFLComingSoon {
 	public function epfl_coming_soon_render_plugin_settings_page() {
 		?>
 		<h2>EPFL Coming Soon</h2>
-		<p><?php _e( 'EPFL Coming Soon is a plugin that allows you to display a page that blocks your website to the vistors. It can be used for displaying a maintenance / under construction / coming soon page / etc.', 'epfl-coming-soon' ); ?></p>
-		<p><?php _e( 'Please head to <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon/issues/new" target="_blank">plugin repository</a> for questions, remarks and issues.', 'epfl-coming-soon' ); ?></p>
-		<p><?php _e( 'More information and plugin sources can be reached on <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon" target="_blank">GitHub</a>.', 'epfl-coming-soon' ); ?></p>
-
+		<div class="notice notice-info">
+			<p>
+				<?php _e( 'EPFL Coming Soon is a plugin that allows you to display a page that blocks your website to the vistors. It can be used for displaying a maintenance / under construction / coming soon page / etc.', 'epfl-coming-soon' ); ?><br>
+				<?php _e( 'Please head to <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon/issues/new" target="_blank">plugin repository</a> for questions, remarks and issues.', 'epfl-coming-soon' ); ?><br>
+				<?php _e( 'More information and plugin sources can be reached on <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon" target="_blank">GitHub</a>.', 'epfl-coming-soon' ); ?><br>
+			</p>
+		</div>
 		<form action="options.php" method="post">
 			<?php
 			settings_fields( 'epfl_coming_soon_plugin_options' );
@@ -239,8 +242,8 @@ class EPFLComingSoon {
 
 		add_settings_section( 'epfl_coming_soon_plugin_settings', __( 'Settings', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_section_text' ), 'epfl_coming_soon_plugin' );
 		add_settings_field( 'epfl_coming_soon_plugin_setting_status', __( 'Status', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_setting_status' ), 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings' );
-		add_settings_field( 'epfl_coming_soon_plugin_setting_theme_maintenance', __( 'Use theme maintenance page', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_setting_theme_maintenance' ), 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings' );
-		add_settings_field( 'epfl_coming_soon_plugin_setting_status_code', __( 'Use 503 status', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_setting_status_code' ), 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings' );
+		add_settings_field( 'epfl_coming_soon_plugin_setting_theme_maintenance', __( 'Use theme\'s page', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_setting_theme_maintenance' ), 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings' );
+		add_settings_field( 'epfl_coming_soon_plugin_setting_status_code', __( 'HTTP status code', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_setting_status_code' ), 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_settings' );
 
 		add_settings_section( 'epfl_coming_soon_plugin_page_settings', __( 'Displayed page', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_page_content_section_text' ), 'epfl_coming_soon_plugin' );
 		add_settings_field( 'epfl_coming_soon_plugin_setting_page_title', __( 'Page title', 'epfl-coming-soon' ), array( $this, 'epfl_coming_soon_plugin_page_title' ), 'epfl_coming_soon_plugin', 'epfl_coming_soon_plugin_page_settings' );
@@ -320,8 +323,8 @@ EOD;
 	public function epfl_coming_soon_plugin_setting_theme_maintenance() {
 		$epfl_coming_soon_options           = get_option( 'epfl_csp_options' );
 		$epfl_coming_soon_theme_maintenance = $epfl_coming_soon_options['theme_maintenance'] ?? 'no';
-		printf( "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_yes' name='epfl_csp_options[theme_maintenance]' type='radio' value='yes' " . ( 'yes' === $epfl_coming_soon_theme_maintenance ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_theme_maintenance_yes'>%s</label><br>", __( 'Yes, if present (maintenance.php)', 'epfl-coming-soon' ) );
-		printf( "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_no' name='epfl_csp_options[theme_maintenance]' type='radio' value='no' " . ( 'no' === $epfl_coming_soon_theme_maintenance ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_theme_maintenance_no'>%s</label>", __( 'No, use the HTML code provided below', 'epfl-coming-soon' ) );
+		printf( "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_no' name='epfl_csp_options[theme_maintenance]' type='radio' value='no' " . ( 'no' === $epfl_coming_soon_theme_maintenance ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_theme_maintenance_no'>%s</label><br>", __( 'Use the HTML code provided below', 'epfl-coming-soon' ) );
+		printf( "<input id='epfl_coming_soon_plugin_setting_theme_maintenance_yes' name='epfl_csp_options[theme_maintenance]' type='radio' value='yes' " . ( 'yes' === $epfl_coming_soon_theme_maintenance ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_theme_maintenance_yes'>%s</label>", __( 'Use the theme\'s maintenance.php (if present)', 'epfl-coming-soon' ) );
 	}
 
 	/**
@@ -336,8 +339,8 @@ EOD;
 		} elseif ( 'yes' === $epfl_coming_soon_status_code ) {
 			$epfl_coming_soon_status_code = '503';
 		}
-		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_yes' name='epfl_csp_options[status_code]' type='radio' value='503' " . ( '503' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_yes'>%s</label><br>", __( 'Yes, use 503 HTTP status code (best for maintenance)', 'epfl-coming-soon' ) );
-		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_no' name='epfl_csp_options[status_code]' type='radio' value='200' " . ( '200' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_no'>%s</label>", __( 'No, just display the page with a 200 HTTP status code (best for coming soon)', 'epfl-coming-soon' ) );
+		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_no' name='epfl_csp_options[status_code]' type='radio' value='200' " . ( '200' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_no'>%s</label><br>", __( 'Just display the page with a HTTP status code 200 (best for coming soon)', 'epfl-coming-soon' ) );
+		printf( "<input id='epfl_coming_soon_plugin_setting_status_code_503_yes' name='epfl_csp_options[status_code]' type='radio' value='503' " . ( '503' === $epfl_coming_soon_status_code ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_code_503_yes'>%s</label>", __( 'Use HTTP status code 503 (best for maintenance)', 'epfl-coming-soon' ) );
 	}
 
 	/**

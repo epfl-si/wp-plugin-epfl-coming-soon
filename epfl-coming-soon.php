@@ -10,7 +10,7 @@
  * Plugin URI: https://github.com/epfl-si/wp-plugin-epfl-coming-soon
  * Description: Coming Soon, Under Construction or Maintenance Mode plugin for WordPress done right.
  * Author: EPFL IDEV-FSD
- * Version: 0.1.4
+ * Version: 0.1.5
  * Author URI: https://github.com/epfl-si
  * Text Domain: epfl-coming-soon
  * Domain Path: src/languages
@@ -19,7 +19,7 @@
 defined( 'ABSPATH' )
 	|| die( 'Direct access not allowed.' );
 
-define( 'EPFL_COMING_SOON_VERSION', '0.1.4' );
+define( 'EPFL_COMING_SOON_VERSION', '0.1.5' );
 
 require_once WP_CONTENT_DIR . '/plugins/epfl-coming-soon/src/classes/class-epflcomingsoon.php';
 
