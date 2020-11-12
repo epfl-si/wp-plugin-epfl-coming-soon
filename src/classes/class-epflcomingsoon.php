@@ -21,7 +21,7 @@ class EPFLComingSoon {
 		add_action( 'admin_menu', array( $this, 'epfl_coming_soon_add_settings_page' ) );
 		add_action( 'admin_init', array( $this, 'epfl_coming_soon_register_settings' ) );
 		add_action( 'admin_bar_menu', array( $this, 'epfl_coming_soon_admin_bar_entry' ), 999 );
-		add_action( 'rest_api_init', array( $this, 'epfl_coming_soon_api_rest' ) );
+		add_action( 'rest_api_init', array( $this, 'epfl_coming_soon_rest_api' ) );
 	}
 
 	/**
@@ -35,15 +35,16 @@ class EPFLComingSoon {
 	}
 
 	/**
-	 * EPFL coming soon api rest
+	 * EPFL coming soon rest API
 	 **/
-	public function epfl_coming_soon_api_rest() {
+	public function epfl_coming_soon_rest_api() {
 		register_rest_route(
-			'comingsoon/v1/',
-			'/status',
+			'epfl/v1/',
+			'coming-soon/status',
 			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'comming_soon_api' ),
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'comming_soon_api' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 	}
@@ -53,10 +54,18 @@ class EPFLComingSoon {
 	 **/
 	public function comming_soon_api() {
 		if ( $this->is_plugin_activated( 'epfl-coming-soon/epfl-coming-soon.php' ) ) {
+			$epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? '200';
+			// Transform yes/no values in 503/200 values for more readibility. Retro-compatible.
+			if ( 'no' === $epfl_coming_soon_status_code ) {
+				$epfl_coming_soon_status_code = '200';
+			} elseif ( 'yes' === $epfl_coming_soon_status_code ) {
+				$epfl_coming_soon_status_code = '503';
+			}
 			$data                      = array();
-			$data['status']            = $this->test_maintenance_file() ? 'on' : get_option( 'epfl_csp_options' )['status'];
-			$data['status_code']       = get_option( 'epfl_csp_options' )['status_code'];
-			$data['theme_maintenance'] = get_option( 'epfl_csp_options' )['theme_maintenance'];
+			$data['status']            = $this->test_maintenance_file() ? '1' : ( 'on' === get_option( 'epfl_csp_options' )['status'] ? '1' : '0' );
+			$data['maintenance_mode']  = $this->test_maintenance_file() ? '1' : '0';
+			$data['status_code']       = $epfl_coming_soon_status_code;
+			$data['theme_maintenance'] = 'on' === get_option( 'epfl_csp_options' )['theme_maintenance'] ? '1' : '0';
 			$data['version']           = $this->get_plugin_version();
 			return new WP_REST_Response( $data, 200 );
 		}
@@ -275,8 +284,6 @@ EOD;
 	public function epfl_coming_soon_plugin_page_title() {
 		$epfl_coming_soon_plugin_page_title = get_option( 'epfl_csp_options' )['page_title'] ?? 'Coming soon';
 		echo '<input type="text" value="' . $epfl_coming_soon_plugin_page_title . '" name="epfl_csp_options[page_title]" id="epfl_coming_soon_plugin_page_title" />';
-		// echo '<p class="description" id="epfl_coming_soon_plugin_page_title-description"> <label for="epfl_coming_soon_plugin_page_title">The title of the page (will be prefixed by site title, i.e. "' . get_bloginfo( 'name' ) . ' &raquo;")</label></p>';
-		// FIX: this display the string length!
 		echo '<p class="description" id="epfl_coming_soon_plugin_page_title-description"> <label for="epfl_coming_soon_plugin_page_title">';
 		printf(
 			/* translators: %s: blog name */
