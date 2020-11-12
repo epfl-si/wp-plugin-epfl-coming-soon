@@ -294,6 +294,17 @@ EOD;
 		$epfl_coming_soon_status  = $epfl_coming_soon_options['status'] ?? 'off';
 		printf( "<input id='epfl_coming_soon_plugin_setting_status_on' name='epfl_csp_options[status]' type='radio' value='on' " . ( 'on' === $epfl_coming_soon_status ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_on'>%s</label><br>", __( 'ON', 'epfl-coming-soon' ) );
 		printf( "<input id='epfl_coming_soon_plugin_setting_status_off' name='epfl_csp_options[status]' type='radio' value='off' " . ( 'off' === $epfl_coming_soon_status ? "checked='checked'" : '' ) . " /> <label for='epfl_coming_soon_plugin_setting_status_off'>%s</label>", __( 'OFF', 'epfl-coming-soon' ) );
+
+		// Display a warning if the .maintenance file is present.
+		if ( $this->test_maintenance_file() ) {
+			printf(
+				/* translators: 1: info 2: meaning 3: details */
+				'<br><div class="update-nag notice notice-error">%1$s<br>%2$s<br>%3$s</div>',
+				__( 'The plugin status have been surcharged by the <code>.maintenance</code> file!', 'epfl-coming-soon' ),
+				__( 'This means that the plugin is <b>ACTIVATED</b>, whatever the status is.', 'epfl-coming-soon' ),
+				__( 'Remove the file to use normal settings. See <a href="https://developer.wordpress.org/cli/commands/maintenance-mode/" target="_blank">wp-cli maintenance mode</a> for details.', 'epfl-coming-soon' )
+			);
+		}
 	}
 
 	/**
@@ -333,7 +344,7 @@ EOD;
 			'title' => __( 'EPFL Coming Soon is active', 'epfl-coming-soon' ),
 			'href'  => admin_url() . 'options-general.php?page=epfl-coming-soon',
 		);
-		if ( $this->get_coming_soon_status() === 'on' ) {
+		if ( $this->get_coming_soon_status() === 'on' || $this->test_maintenance_file() ) {
 			$wp_admin_bar->add_node( $args );
 		}
 	}
