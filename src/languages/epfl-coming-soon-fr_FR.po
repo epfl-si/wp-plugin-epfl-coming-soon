@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the EPFL Coming Soon plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPForms EPFL Payonline 0.1.2\n"
+"Project-Id-Version: WPForms EPFL Payonline 0.1.3\n"
 "Report-Msgid-Bugs-To: https://github.com/wp-cli/i18n-command/issues\n"
-"POT-Creation-Date: 2020-11-12T18:59:14+01:00\n"
+"POT-Creation-Date: 2020-11-12T19:18:24+01:00\n"
 "PO-Revision-Date: 2020-11-11 18:23+0100\n"
 "Last-Translator: Nicolas Borboën <ponsfrilus@gmail.com>\n"
 "Language-Team: French\n"
@@ -123,24 +123,44 @@ msgstr "Activé"
 msgid "OFF"
 msgstr "Desactivé"
 
+#: src/classes/class-epflcomingsoon.php:303
+msgid ""
+"The plugin status have been surcharged by the <code>.maintenance</code> file!"
+msgstr ""
+"L'état du plugin est surchargé par le fichier <code>.maintenance</code> !"
+
+#: src/classes/class-epflcomingsoon.php:304
+msgid "This means that the plugin is <b>ACTIVATED</b>, whatever the status is."
+msgstr "Cela signifie que le plugin est <b>ACTIVÉ</b>, peu importe son statut."
+
 #: src/classes/class-epflcomingsoon.php:305
+msgid ""
+"Remove the file to use normal settings. See <a href=\"https://developer."
+"wordpress.org/cli/commands/maintenance-mode/\" target=\"_blank\">wp-cli "
+"maintenance mode</a> for details."
+msgstr ""
+"Supprimer le fichier pour utiliser les paramètres habituels. Visitez <a href="
+"\"https://developer.wordpress.org/cli/commands/maintenance-mode/\" target=\""
+"_blank\">wp-cli maintenance mode</a> pour plus d'informations."
+
+#: src/classes/class-epflcomingsoon.php:316
 msgid "Yes, if present (maintenance.php)"
 msgstr "Oui, si présent (maintenance.php)"
 
-#: src/classes/class-epflcomingsoon.php:306
+#: src/classes/class-epflcomingsoon.php:317
 msgid "No, use the HTML code provided below"
 msgstr "Non, utiliser le code HTML ci-dessous"
 
-#: src/classes/class-epflcomingsoon.php:321
+#: src/classes/class-epflcomingsoon.php:332
 msgid "Yes, use 503 HTTP status code (best for maintenance)"
 msgstr "Oui, utiliser le code HTTP 503 (si page de maintenance)"
 
-#: src/classes/class-epflcomingsoon.php:322
+#: src/classes/class-epflcomingsoon.php:333
 msgid ""
 "No, just display the page with a 200 HTTP status code (best for coming soon)"
 msgstr "Non, afficher la page avec un code HTTP 200 (si page \"coming soon\")"
 
-#: src/classes/class-epflcomingsoon.php:333
+#: src/classes/class-epflcomingsoon.php:344
 msgid "EPFL Coming Soon is active"
 msgstr "EPFL Coming Soon est activé"
 
