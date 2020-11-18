@@ -43,16 +43,16 @@ class EPFLComingSoon {
 			'coming-soon',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'comming_soon_api' ),
+				'callback'            => array( $this, 'coming_soon_api' ),
 				'permission_callback' => '__return_true',
 			)
 		);
 	}
 
 	/**
-	 * Comming soon API
+	 * Coming soon API
 	 **/
-	public function comming_soon_api() {
+	public function coming_soon_api() {
 		if ( $this->is_plugin_activated( 'epfl-coming-soon/epfl-coming-soon.php' ) ) {
 			$epfl_coming_soon_status_code = $epfl_coming_soon_options['status_code'] ?? '200';
 			// Transform yes/no values in 503/200 values for more readibility. Retro-compatible.
