@@ -116,7 +116,7 @@ class EPFLComingSoon {
 	 */
 	private function get_coming_soon_status() {
 		$options = get_option( 'epfl_csp_options' );
-		return $options['status'];
+		return $options['status'] ?? null;
 	}
 
 	/**
