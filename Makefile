@@ -64,3 +64,30 @@ pot: check-wp check-gettext $(DOMAIN_PATH)/$(PROJECT_NAME).pot
 		msginit --input=$(DOMAIN_PATH)/$(PROJECT_NAME).pot --locale=fr --output=$(DOMAIN_PATH)/$(PROJECT_NAME)-fr_FR.po; \
 	fi
 	msgfmt --output-file=$(DOMAIN_PATH)/$(PROJECT_NAME)-fr_FR.mo $(DOMAIN_PATH)/$(PROJECT_NAME)-fr_FR.po
+
+check-zip:
+	@type zip > /dev/null 2>&1 || { echo >&2 "Please install zip. Aborting."; exit 1; }
+
+.PHONY: zip
+zip: check-zip
+	@mkdir builds || true
+	cd ..; zip -r -FS $(PROJECT_NAME)/builds/$(PROJECT_NAME)-$(VERSION).zip $(PROJECT_NAME) \
+		--exclude '*.git*' \
+		--exclude '*.zip' \
+		--exclude '*.po~' \
+		--exclude '*.php.bak' \
+		--exclude '*.po.bak' \
+		--exclude '*/.phpcs.xml' \
+		--exclude '*builds*' \
+		--exclude '*doc*' \
+		--exclude '*/Makefile'; cd $(PROJECT_NAME)
+	@if [ -L ./builds/$(PROJECT_NAME).zip ] ; then \
+		cd ./builds; \
+		ln -sfn $(PROJECT_NAME)-$(VERSION).zip ./$(PROJECT_NAME).zip; \
+		ln -sfn $(PROJECT_NAME)-$(VERSION).zip ./latest.zip; \
+	else \
+		cd ./builds; \
+		ln -s $(PROJECT_NAME)-$(VERSION).zip ./$(PROJECT_NAME).zip; \
+		ln -s $(PROJECT_NAME)-$(VERSION).zip ./latest.zip; \
+	fi
+	@echo "Zip for version $(VERSION) is now available in ./builds/$(PROJECT_NAME).zip"
