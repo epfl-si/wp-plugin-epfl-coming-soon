@@ -39,7 +39,7 @@ class EPFLComingSoon {
 	 **/
 	public function epfl_coming_soon_rest_api() {
 		register_rest_route(
-			'epfl/v1/',
+			'epfl/v1',
 			'coming-soon',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
