@@ -39,3 +39,18 @@ function epfl_coming_soon_plugin_textdomain() {
 	load_plugin_textdomain( 'epfl-coming-soon', false, 'epfl-coming-soon/src/languages/' );
 }
 add_action( 'init', 'epfl_coming_soon_plugin_textdomain' );
+
+/**
+ * Add endpoint to WordPress REST API -> /wp-json/epfl-coming-soon/v1/status
+ */
+add_action( 'rest_api_init', function() {
+    register_rest_route( 'epfl-coming-soon/v1', 'status', array(
+        'method'   => 'WP_REST_Server::READABLE',
+        'callback' => __NAMESPACE__ . '\\get_epfl_coming_soon_status',
+    ) );
+} );
+
+function get_epfl_coming_soon_status() {
+    $status = get_option('epfl_csp_options')['status'] ? '1' : '0';
+    return $status;
+} 
