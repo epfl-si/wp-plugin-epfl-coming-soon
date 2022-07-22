@@ -46,7 +46,7 @@ add_action( 'init', 'epfl_coming_soon_plugin_textdomain' );
 add_action( 'rest_api_init', function() {
     register_rest_route( 'epfl-coming-soon/v1', 'status', array(
         'method'   => 'WP_REST_Server::READABLE',
-        'callback' => __NAMESPACE__ . '\\get_epfl_coming_soon_status',
+        'callback' => 'get_epfl_coming_soon_status',
     ) );
 } );
 
