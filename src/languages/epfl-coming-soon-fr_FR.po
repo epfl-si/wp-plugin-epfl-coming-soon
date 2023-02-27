@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the EPFL Coming Soon plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPForms EPFL Payonline 0.1.5\n"
+"Project-Id-Version: WPForms EPFL Payonline 0.1.7\n"
 "Report-Msgid-Bugs-To: https://github.com/wp-cli/i18n-command/issues\n"
-"POT-Creation-Date: 2020-11-12T23:01:12+01:00\n"
+"POT-Creation-Date: 2023-02-27T14:43:52+01:00\n"
 "PO-Revision-Date: 2020-11-11 18:23+0100\n"
 "Last-Translator: Nicolas Borboën <ponsfrilus@gmail.com>\n"
 "Language-Team: French\n"
@@ -47,8 +47,8 @@ msgid ""
 "under construction / coming soon page / etc."
 msgstr ""
 "EPFL Coming Soon est un plugin permettant d'afficher une page qui "
-"bloquevotre site Internet à vos visiteurs. Il peut être utilisé pour "
-"affichierune page de maintenance, de travaux, de disponibilité imminente, "
+"bloque votre site Internet à vos visiteurs. Il peut être utilisé pour "
+"afficher une page de maintenance, de travaux, de disponibilité imminente, "
 "etc."
 
 #: src/classes/class-epflcomingsoon.php:221
@@ -70,70 +70,78 @@ msgstr ""
 "\"https://github.com/epfl-si/wp-plugin-epfl-coming-soon\" target=\"_blank"
 "\">GitHub</a>."
 
-#: src/classes/class-epflcomingsoon.php:243
+#: src/classes/class-epflcomingsoon.php:224
+msgid ""
+"You are using <a href=\"https://github.com/epfl-si/wp-plugin-epfl-coming-soon"
+"\" target=\"_blank\">EPFL Coming Soon</a> version"
+msgstr ""
+"Vous utilisez <a href=\"https://github.com/epfl-si/wp-plugin-epfl-coming-soon"
+"\" target=\"_blank\">EPFL Coming Soon</a> version"
+
+#: src/classes/class-epflcomingsoon.php:245
 msgid "Settings"
 msgstr "Paramètres"
 
-#: src/classes/class-epflcomingsoon.php:244
+#: src/classes/class-epflcomingsoon.php:246
 msgid "Status"
 msgstr "Statut"
 
-#: src/classes/class-epflcomingsoon.php:245
+#: src/classes/class-epflcomingsoon.php:247
 msgid "Use theme's page"
 msgstr "Utiliser la page du thème"
 
-#: src/classes/class-epflcomingsoon.php:246
+#: src/classes/class-epflcomingsoon.php:248
 msgid "HTTP status code"
 msgstr "Code HTTP"
 
-#: src/classes/class-epflcomingsoon.php:248
+#: src/classes/class-epflcomingsoon.php:250
 msgid "Displayed page"
 msgstr "Page affichée"
 
-#: src/classes/class-epflcomingsoon.php:249
+#: src/classes/class-epflcomingsoon.php:251
 msgid "Page title"
 msgstr "Titre de la page"
 
-#: src/classes/class-epflcomingsoon.php:250
+#: src/classes/class-epflcomingsoon.php:252
 msgid "Page content"
 msgstr "Contenu de la page"
 
-#: src/classes/class-epflcomingsoon.php:257
+#: src/classes/class-epflcomingsoon.php:259
 msgid "In this section you can parametrize the EPFL Coming Soon plugin."
 msgstr "Cette section vous permet de paramétrer le plugin EPFL Coming Soon."
 
-#: src/classes/class-epflcomingsoon.php:264
+#: src/classes/class-epflcomingsoon.php:266
 msgid ""
 "In this section you can modify the coming soon / maintenance page diplayed."
 msgstr ""
 "Cette section vous permet de modifier la page de maintenance / coming soon."
 
 #. translators: %s: blog name
-#: src/classes/class-epflcomingsoon.php:293
+#: src/classes/class-epflcomingsoon.php:295
 msgid ""
 "The title of the page (will be prefixed by site title, i.e. \"%s &raquo;\")"
 msgstr ""
 "Le titre de la page (sera préfixée par le titre du site, i.e. \"%s &raquo;\")"
 
-#: src/classes/class-epflcomingsoon.php:305
+#: src/classes/class-epflcomingsoon.php:307
 msgid "ON"
 msgstr "Activé"
 
-#: src/classes/class-epflcomingsoon.php:306
+#: src/classes/class-epflcomingsoon.php:308
 msgid "OFF"
 msgstr "Desactivé"
 
-#: src/classes/class-epflcomingsoon.php:313
+#: src/classes/class-epflcomingsoon.php:315
 msgid ""
 "The plugin status have been surcharged by the <code>.maintenance</code> file!"
 msgstr ""
 "L'état du plugin est surchargé par le fichier <code>.maintenance</code> !"
 
-#: src/classes/class-epflcomingsoon.php:314
+#: src/classes/class-epflcomingsoon.php:316
 msgid "This means that the plugin is <b>ACTIVATED</b>, whatever the status is."
 msgstr "Cela signifie que le plugin est <b>ACTIVÉ</b>, peu importe son statut."
 
-#: src/classes/class-epflcomingsoon.php:315
+#: src/classes/class-epflcomingsoon.php:317
 msgid ""
 "Remove the file to use normal settings. See <a href=\"https://developer."
 "wordpress.org/cli/commands/maintenance-mode/\" target=\"_blank\">wp-cli "
@@ -143,23 +151,23 @@ msgstr ""
 "\"https://developer.wordpress.org/cli/commands/maintenance-mode/\" target="
 "\"_blank\">wp-cli maintenance mode</a> pour plus d'informations."
 
-#: src/classes/class-epflcomingsoon.php:326
+#: src/classes/class-epflcomingsoon.php:328
 msgid "Use the HTML code provided below"
 msgstr "Utiliser le code HTML ci-dessous"
 
-#: src/classes/class-epflcomingsoon.php:327
+#: src/classes/class-epflcomingsoon.php:329
 msgid "Use the theme's maintenance.php (if present)"
 msgstr "Utiliser la page maintenance.php du thème (si présente)"
 
-#: src/classes/class-epflcomingsoon.php:342
+#: src/classes/class-epflcomingsoon.php:344
 msgid ""
 "Just display the page with a HTTP status code 200 (best for coming soon)"
 msgstr "Afficher la page avec un code HTTP 200 (pour page \"coming soon\")"
 
-#: src/classes/class-epflcomingsoon.php:343
+#: src/classes/class-epflcomingsoon.php:345
 msgid "Use HTTP status code 503 (best for maintenance)"
 msgstr "Utiliser le code HTTP 503 (pour page de maintenance)"
 
-#: src/classes/class-epflcomingsoon.php:354
+#: src/classes/class-epflcomingsoon.php:356
 msgid "EPFL Coming Soon is active"
 msgstr "EPFL Coming Soon est activé"

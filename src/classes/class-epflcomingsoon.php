@@ -220,6 +220,8 @@ class EPFLComingSoon {
 				<?php _e( 'EPFL Coming Soon is a plugin that allows you to display a page that blocks your website to the vistors. It can be used for displaying a maintenance / under construction / coming soon page / etc.', 'epfl-coming-soon' ); ?><br>
 				<?php _e( 'Please head to <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon/issues/new" target="_blank">plugin repository</a> for questions, remarks and issues.', 'epfl-coming-soon' ); ?><br>
 				<?php _e( 'More information and plugin sources can be reached on <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon" target="_blank">GitHub</a>.', 'epfl-coming-soon' ); ?><br>
+				<br>
+				<?php printf( '%s %s.', _e( 'You are using <a href="https://github.com/epfl-si/wp-plugin-epfl-coming-soon" target="_blank">EPFL Coming Soon</a> version', 'epfl-coming-soon' ), '<code>' . EPFL_COMING_SOON_VERSION . '</code>' ); ?>
 			</p>
 		</div>
 		<form action="options.php" method="post">
