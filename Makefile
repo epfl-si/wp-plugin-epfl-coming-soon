@@ -78,6 +78,8 @@ zip: check-zip
 		--exclude '*.php.bak' \
 		--exclude '*.po.bak' \
 		--exclude '*/.phpcs.xml' \
+		--exclude '*bin*' \
+		--exclude '*vendor*' \
 		--exclude '*builds*' \
 		--exclude '*doc*' \
 		--exclude '*/Makefile'; cd $(PROJECT_NAME)
